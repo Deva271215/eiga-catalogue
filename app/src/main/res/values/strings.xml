@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">EigaCatalogue</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="item_row_image">Image here...</string>
+    <string name="item_row_title">Fairy tail</string>
+    <string name="item_row_release">April 23, 2015</string>
+    <string name="item_row_genres">Action, Fantasy, Romance, Comedy, Gore</string>
+    <string name="item_row_score">8.3</string>
+    <string name="item_row_director">Aji Pandean Mertayasa</string>
+    <string name="item_row_creator">Aji Pandean Mertayasa</string>
+    <string name="item_row_synopsis">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab blanditiis commodi, delectus distinctio enim eos excepturi expedita facilis id inventore ipsa itaque maxime numquam perferendis placeat recusandae similique tenetur?</string>
+
+    <string name="view_pager_movie">Movie</string>
+    <string name="view_pager_tvshow">TV Show</string>
+
+    <string name="detail_genre_header">Genre</string>
+    <string name="detail_release_header">Release</string>
+    <string name="detail_score_header">Popularity</string>
+    <string name="detail_director_header">Directors</string>
+    <string name="detail_creator_header">Creator</string>
+    <string name="detail_synopsis_header">Synopsis</string>
+
+    <string name="default_movie_title">Fairy Tail</string>
+</resources>
