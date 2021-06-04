@@ -24,6 +24,7 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var activityDetailBinding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
+    private lateinit var menus: Menu
     private var movie = MovieEntity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,14 +63,19 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.favorite_menu, menu)
+        menus = menu!!
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.favorite_menu -> {
-                viewModel.insertFavorite(movie)
+                if (movie.isFavorited == true) {
+                    menus.findItem(R.id.favorite_menu).setIcon(R.drawable.ic_baseline_favorite_border_24)
+                } else {
+                    menus.findItem(R.id.favorite_menu).setIcon(R.drawable.ic_baseline_favorite_24)
+                    viewModel.insertFavorite(movie)
+                }
             }
         }
         return super.onOptionsItemSelected(item)

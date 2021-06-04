@@ -131,6 +131,9 @@ class MovieRepository private constructor(
         return tvShow
     }
 
-    override fun insertFavorite(f: MovieEntity) = executorService.execute { localDataSource.insertFavorite(f) }
+    override fun insertFavorite(f: MovieEntity) = executorService.execute {
+        f.isFavorited = true
+        localDataSource.insertFavorite(f)
+    }
 
 }

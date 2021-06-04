@@ -42,4 +42,7 @@ data class MovieEntity(
 
         @ColumnInfo(name = "release")
         val release: String? = "",
+
+        @ColumnInfo(name = "is_favorited")
+        var isFavorited: Boolean? = false,
  )
