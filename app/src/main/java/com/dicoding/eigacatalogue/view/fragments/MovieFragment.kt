@@ -46,7 +46,7 @@ class MovieFragment : Fragment() {
         if (activity != null) {
             mfBinding.progressBar.visibility = View.VISIBLE
 
-            val factory = ViewModelFactory.getInstance()
+            val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(
                 this,
                 factory)[MovieViewModel::class.java]

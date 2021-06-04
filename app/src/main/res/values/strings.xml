@@ -23,4 +23,5 @@
     <string name="detail_synopsis_header">Synopsis</string>
 
     <string name="default_movie_title">Fairy Tail</string>
+    <string name="title_favorite">Favorite</string>
 </resources>

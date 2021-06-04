@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -21,6 +23,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var activityDetailBinding: ActivityDetailBinding
+    private lateinit var viewModel: DetailViewModel
+    private lateinit var menus: Menu
+    private var movie = MovieEntity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,26 +34,25 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val factory = ViewModelFactory.getInstance()
-        val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
         val extras = intent.extras
         activityDetailBinding.progressBar.visibility = View.VISIBLE
         if (extras != null) {
             val id = extras.getInt(MOVKEY)
-            val movieStatus = extras.getString(STATKEY)
-            when(movieStatus) {
+            when(extras.getString(STATKEY)) {
                 "movie" -> {
                     viewModel.setSelectedMovies(id)
                     viewModel.getMovie().observe(this, {
-                        setMovieItem(it, movieStatus)
+                        setMovieItem(it)
                         activityDetailBinding.progressBar.visibility = View.GONE
                     })
                 }
                 "tvshow" -> {
                     viewModel.setSelectedMovies(id)
                     viewModel.getTVShow().observe(this, {
-                        setMovieItem(it, movieStatus)
+                        setMovieItem(it)
                         activityDetailBinding.progressBar.visibility = View.GONE
                     })
                 }
@@ -56,8 +60,27 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menus = menu!!
+        menuInflater.inflate(R.menu.favorite_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.favorite_menu -> {
+                if (movie.isFavorited == true) {
+                    viewModel.removeFavorite(movie)
+                } else {
+                    viewModel.insertFavorite(movie)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     @SuppressLint("SetTextI18n")
-    private fun setMovieItem(movie: MovieEntity, movieStatus: String?) {
+    private fun setMovieItem(movie: MovieEntity) {
         Log.d("Item", movie.toString())
         movie.apply {
             with(activityDetailBinding) {

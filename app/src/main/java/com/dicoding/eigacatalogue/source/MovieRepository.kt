@@ -3,19 +3,31 @@ package com.dicoding.eigacatalogue.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dicoding.eigacatalogue.MovieEntity
+import com.dicoding.eigacatalogue.source.local.LocalDataSource
+import com.dicoding.eigacatalogue.source.local.LocalDatabase
 import com.dicoding.eigacatalogue.source.remote.RemoteDataSource
 import com.dicoding.eigacatalogue.source.remote.response.CreatedBy
 import com.dicoding.eigacatalogue.source.remote.response.DetailMovieResponse
 import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
 
-class MovieRepository private constructor(private val remoteDataSource: RemoteDataSource): MovieDataSource {
+class MovieRepository private constructor(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
+    private val executorService: ExecutorService
+): MovieDataSource {
     companion object {
         @Volatile
         private var instance: MovieRepository? = null
-        fun getInstance(remoteData: RemoteDataSource): MovieRepository =
+        fun getInstance(
+            remoteData: RemoteDataSource,
+            localDataSource: LocalDataSource,
+            executorService: ExecutorService
+        ): MovieRepository =
             instance ?: synchronized(this) {
-                instance ?: MovieRepository(remoteData).apply { instance = this }
+                instance ?: MovieRepository(remoteData, localDataSource, executorService).apply { instance = this }
             }
     }
 
@@ -117,6 +129,16 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         })
 
         return tvShow
+    }
+
+    override fun insertFavorite(f: MovieEntity) = executorService.execute {
+        f.isFavorited = true
+        localDataSource.insertFavorite(f)
+    }
+
+    override fun removeFavorite(f: MovieEntity) = executorService.execute {
+        f.isFavorited = false
+        localDataSource.removeFavorite(f)
     }
 
 }

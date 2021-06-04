@@ -8,4 +8,7 @@ interface MovieDataSource {
     fun findMovie(id: Int?): LiveData<MovieEntity>
     fun fetchTVShows(): LiveData<List<MovieEntity>>
     fun findTVShow(id: Int?): LiveData<MovieEntity>
+
+    fun insertFavorite(f: MovieEntity)
+    fun removeFavorite(f: MovieEntity)
 }

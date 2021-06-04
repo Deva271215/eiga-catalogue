@@ -1,0 +1,16 @@
+package com.dicoding.eigacatalogue.source.local
+
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import com.dicoding.eigacatalogue.MovieEntity
+
+@Dao
+interface FavoriteDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFavorite(f: MovieEntity)
+
+    @Delete
+    fun removeFavorite(f: MovieEntity)
+}
