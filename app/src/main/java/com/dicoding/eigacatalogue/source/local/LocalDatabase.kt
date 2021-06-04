@@ -1,9 +1,13 @@
 package com.dicoding.eigacatalogue.source.local
 
 import android.content.Context
+import android.graphics.Movie
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.dicoding.eigacatalogue.MovieEntity
 
+@Database(entities = [MovieEntity::class], version = 1, exportSchema = false)
 abstract class LocalDatabase: RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
     companion object {
