@@ -64,6 +64,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menus = menu!!
+        menuInflater.inflate(R.menu.favorite_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -72,6 +73,7 @@ class DetailActivity : AppCompatActivity() {
             R.id.favorite_menu -> {
                 if (movie.isFavorited == true) {
                     menus.findItem(R.id.favorite_menu).setIcon(R.drawable.ic_baseline_favorite_border_24)
+                    viewModel.removeFavorite(movie)
                 } else {
                     menus.findItem(R.id.favorite_menu).setIcon(R.drawable.ic_baseline_favorite_24)
                     viewModel.insertFavorite(movie)

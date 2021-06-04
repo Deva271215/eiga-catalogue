@@ -10,4 +10,5 @@ interface MovieDataSource {
     fun findTVShow(id: Int?): LiveData<MovieEntity>
 
     fun insertFavorite(f: MovieEntity)
+    fun removeFavorite(f: MovieEntity)
 }

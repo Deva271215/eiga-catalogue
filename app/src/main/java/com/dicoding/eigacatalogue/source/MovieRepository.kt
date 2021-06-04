@@ -136,4 +136,9 @@ class MovieRepository private constructor(
         localDataSource.insertFavorite(f)
     }
 
+    override fun removeFavorite(f: MovieEntity) = executorService.execute {
+        f.isFavorited = false
+        localDataSource.removeFavorite(f)
+    }
+
 }

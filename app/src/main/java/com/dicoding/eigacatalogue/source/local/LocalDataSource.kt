@@ -11,4 +11,5 @@ class LocalDataSource private constructor(private val favoriteDao: FavoriteDao) 
     }
 
     fun insertFavorite(f: MovieEntity) = favoriteDao.insertFavorite(f)
+    fun removeFavorite(f: MovieEntity) = favoriteDao.removeFavorite(f)
 }
