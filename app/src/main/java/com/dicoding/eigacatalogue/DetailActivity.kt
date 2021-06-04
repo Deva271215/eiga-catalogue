@@ -41,20 +41,18 @@ class DetailActivity : AppCompatActivity() {
         activityDetailBinding.progressBar.visibility = View.VISIBLE
         if (extras != null) {
             val id = extras.getInt(MOVKEY)
-            when(val movieStatus = extras.getString(STATKEY)) {
+            when(extras.getString(STATKEY)) {
                 "movie" -> {
                     viewModel.setSelectedMovies(id)
                     viewModel.getMovie().observe(this, {
-                        movie = it
-                        setMovieItem(it, movieStatus)
+                        setMovieItem(it)
                         activityDetailBinding.progressBar.visibility = View.GONE
                     })
                 }
                 "tvshow" -> {
                     viewModel.setSelectedMovies(id)
                     viewModel.getTVShow().observe(this, {
-                        movie = it
-                        setMovieItem(it, movieStatus)
+                        setMovieItem(it)
                         activityDetailBinding.progressBar.visibility = View.GONE
                     })
                 }
@@ -72,10 +70,8 @@ class DetailActivity : AppCompatActivity() {
         when(item.itemId) {
             R.id.favorite_menu -> {
                 if (movie.isFavorited == true) {
-                    menus.findItem(R.id.favorite_menu).setIcon(R.drawable.ic_baseline_favorite_border_24)
                     viewModel.removeFavorite(movie)
                 } else {
-                    menus.findItem(R.id.favorite_menu).setIcon(R.drawable.ic_baseline_favorite_24)
                     viewModel.insertFavorite(movie)
                 }
             }
@@ -84,7 +80,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setMovieItem(movie: MovieEntity, movieStatus: String?) {
+    private fun setMovieItem(movie: MovieEntity) {
         Log.d("Item", movie.toString())
         movie.apply {
             with(activityDetailBinding) {
